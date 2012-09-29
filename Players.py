@@ -21,27 +21,27 @@ class PlayerWindows(QtCore.QObject):
     
   @QtCore.Slot()
   def Play(self):
-    pass
+    print("PlayerWindows::Play()")
 
   @QtCore.Slot()
   def Stop(self):
-    pass
+    print("PlayerWindows::Stop()")
     
   @QtCore.Slot()
   def Pause(self):
-    pass
+    print("PlayerWindows::Pause()")
 
   @QtCore.Slot(int)
   def Seek(self, value):
-    pass
+    print("PlayerWindows::Seek()")
 
   @QtCore.Slot(result=float)
   def GetCurrentPosition(self):
-    pass
+    print("PlayerWindows::GetCurrentPosition()")
 
   @QtCore.Slot(result=int)
   def GetDuration(self):
-    pass
+    print("PlayerWindows::GetDuration()")
     
 class PlayerRaspberry(QtCore.QObject):
   def __init__(self):

@@ -19,10 +19,11 @@ class MainWindow(QDeclarativeView):
     super(MainWindow, self).__init__(parent)
     self.setWindowTitle("Main Window")  
     
-    explorer = FileSystemMediaExplorer("d:\\", self.rootContext)
-
-
     self.player = Players.Player()
+    explorer = FileSystemMediaExplorer("d:\\", self.rootContext, self.player)
+
+
+    
     self.rootContext().setContextProperty('player', self.player)
     self.rootContext().setContextProperty('mediaListModel', explorer.MediaList)
     self.rootContext().setContextProperty('mediaExplorer', explorer)
