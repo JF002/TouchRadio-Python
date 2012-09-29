@@ -3,131 +3,73 @@ import QtQuick 1.0
 
 Rectangle
 {
+	id: baseRectangle
+	property alias items: mediaListView.model
+
     MouseArea { anchors.fill: parent; onClicked: console.log(mediaListView.model.count) }
-    ListModel
-    {
-        id: mediaModel
-
-        ListElement {
-            name: "I don't want to have sex with you";
-            attributes: [
-                ListElement { description: "Soldout" },
-                ListElement { description: "Stop talking" }
-            ]
-        }
-        ListElement {
-            name: "I can't wait";
-            attributes: [
-                ListElement { description: "Soldout" },
-                ListElement { description: "Stop talking" }
-            ]
-        }
-        ListElement {
-            name: "A taste of candy";
-            attributes: [
-                ListElement { description: "Soldout" },
-                ListElement { description: "Stop talking" }
-            ]
-        }
-        ListElement {
-            name: "You're not ok";
-            attributes: [
-                ListElement { description: "Soldout" },
-                ListElement { description: "Stop talking" }
-            ]
-        }
-        ListElement {
-            name: "Get out";
-            attributes: [
-                ListElement { description: "Soldout" },
-                ListElement { description: "Stop talking" }
-            ]
-        }
-        ListElement {
-            name: "You dirt";
-            attributes: [
-                ListElement { description: "Soldout" },
-                ListElement { description: "Stop talking" }
-            ]
-        }
-        ListElement {
-            name: "We are soldout";
-            attributes: [
-                ListElement { description: "Soldout" },
-                ListElement { description: "Stop talking" }
-            ]
-        }
-        ListElement {
-            name: "You're different";
-            attributes: [
-                ListElement { description: "Soldout" },
-                ListElement { description: "Stop talking" }
-            ]
-        }
-        ListElement {
-            name: "For your next girlfriend";
-            attributes: [
-                ListElement { description: "Soldout" },
-                ListElement { description: "Stop talking" }
-            ]
-        }
-    }
-
-    Component
-    {
-         id: mediaListDelegate
-
-         Item
-         {
-             id: delegateItem
-             width: parent.width; height: 55
-             clip: true
-
-             Row
-             {
-                 anchors.verticalCenter: parent.verticalCenter
-                 spacing: 10
-
-                 Column
-                 {
-                     Image {
-                         fillMode: Image.PreserveAspectFit
-                         source: "images/Stereo.png"
-                         height: 25
-                         width: 25
-                         MouseArea { anchors.fill: parent; onClicked: console.log("clicked") }
-                     }
-                 }
-
-                 Column {
-                     anchors.verticalCenter: parent.verticalCenter
-
-                     Text {
-                         text: name
-                         font.pixelSize: 15
-                         color: "black"
-                     }
-                     Row {
-                         spacing: 5
-                         Repeater {
-                             model: attributes
-                             Text { text: description; color: "black" }
-                         }
-                     }
-                 }
-             }
-         }
-     }
 
     ListView
     {
-             id: mediaListView
-             model: mediaModel
-             delegate: mediaListDelegate
+		id: mediaListView
+		anchors.fill: parent
+			 
+		delegate: 
+			Component 
+			{
+                Rectangle
+                {
+                    id: componentRectangle
+                    width: parent.width
+                    height: 40
+                    color: ((index % 2 == 0)?"#222":"#111")
+                    
+                    Row
+                    {
+                        width: parent.width
+                        
+                        Image
+                        {
+                            id: rowImage
+                            height: 40
 
-
-            anchors.fill: parent
-
-
-    }
+                            fillMode:Image.PreserveAspectFit
+                            source: 
+                            {
+                                if(model.thing.isDirectory) "images/button.png";
+                                    else "images/Audio.png"
+                            }
+                        }
+                    
+                        Rectangle 
+                        {
+                            id: rectangleItem
+                            height: 40
+                            width: parent.width-40
+                            color: componentRectangle.color
+                            Text 
+                            {
+                                id: title
+                                elide: Text.ElideRight
+                                text: model.thing.name
+                                color: "white"
+                                font.bold: {
+                                    if(model.thing.isDirectory) true;
+                                    else false;
+                                }
+                                anchors.leftMargin: 10
+                                anchors.fill: parent
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                    }
+                    
+                    MouseArea
+                    {
+                        anchors.fill: parent
+                        onClicked: { console.log("Clicked"); mediaExplorer.fileOrDirectorySelected(model.thing, items) }
+                    } 
+                }
+                
+			}
+     }
 }

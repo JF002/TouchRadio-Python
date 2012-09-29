@@ -14,6 +14,7 @@ Rectangle{
             width: parent.width/2
             anchors.horizontalCenter: parent.horizontalCenter
             height: parent.height - playerControl.height
+			items: mediaListModel
         }
 
         PlayerControl{
