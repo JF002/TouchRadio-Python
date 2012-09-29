@@ -5,6 +5,10 @@ from PySide import QtCore
 import platform
 import threading
 
+if(platform.system() == "Linux"):
+    sys.path.append('.//omxplayerModule/build/lib.linux-armv6l-3.2/')
+    import omxplayer
+
 class Player(QtCore.QObject):
   def __init__(self):
     QtCore.QObject.__init__(self)
